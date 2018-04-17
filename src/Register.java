@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.EventListener;
 import java.awt.event.ActionEvent;
@@ -18,17 +19,19 @@ import java.awt.event.KeyEvent;
 import java.awt.Color;
 
 public class Register extends JFrame implements ActionListener{
-	/**
-	 * 
-	 */
+
+	Conexion c = new Conexion();
+	
+	ResultSet rs;
 	private static final long serialVersionUID = 1L;
 	Users u = new Users();
 	private JPanel contentPane;
 	private JTextField password,password2,name;
 	JButton reg = new JButton("Registrar");
-	private JLabel lblIngresaTusDatos,lblWarning,lblIngresaTuNombre,lblIngresaTuContrasea,lblConfirmaTuContrasea,lblPass;
+	private JLabel lblIngresaTusDatos,lblIngresaTuNombre,lblIngresaTuContrasea,lblConfirmaTuContrasea;
 	private TextPrompt tpPass2;
 	public boolean userOk = false,userName = false;
+	private JLabel lblWarning;
 
 		public Register() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -53,13 +56,6 @@ public class Register extends JFrame implements ActionListener{
 		password.setColumns(10);
 		password.setBounds(42, 117, 176, 20);
 		mainPanel.add(password);
-		
-		lblWarning = new JLabel("");
-		lblWarning.setForeground(Color.RED);
-		lblWarning.setFont(new Font("Yu Gothic UI Light", Font.ITALIC, 8));
-		lblWarning.setEnabled(false);
-		lblWarning.setBounds(42, 79, 89, 14);
-		mainPanel.add(lblWarning);
 		
 		password2 = new JTextField();
 		password2.setColumns(10);
@@ -97,34 +93,64 @@ public class Register extends JFrame implements ActionListener{
 		lblConfirmaTuContrasea.setBounds(42, 156, 176, 14);
 		mainPanel.add(lblConfirmaTuContrasea);
 		
-		lblPass = new JLabel();
-		lblPass.setFont(new Font("Yu Gothic UI Light", Font.ITALIC, 11));
-		lblPass.setBounds(42, 200, 118, -11);
+		JLabel lblPass = new JLabel("");
+		lblPass.setFont(new Font("Yu Gothic Light", Font.ITALIC, 10));
+		lblPass.setBounds(42, 189, 176, 14);
 		mainPanel.add(lblPass);
+		
+		lblWarning = new JLabel("");
+		lblWarning.setFont(new Font("Yu Gothic UI Light", Font.ITALIC, 10));
+		lblWarning.setBounds(42, 79, 176, 14);
+		mainPanel.add(lblWarning);
 
 		password2.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				if(!password.getText().equals(password2.getText()) && password2.getText().length() > 0){
+				if(!password.getText().equals(password2.getText()) && (password2.getText().length() > 0 || password.getText().length() > 0)){
+					lblPass.setForeground(new Color(244, 66, 38));
 					lblPass.setText("La contraseña no coincide");
 				}else if(password.getText().equals(password2.getText())){
+					lblPass.setForeground(new Color(63, 155, 19));
 					lblPass.setText("Contraseña correcta");
 					userOk = true;
+				}else if(password.getText().length() == 0 && password2.getText().length() == 0) {
+					lblPass.setText("");
 				}
 			}
 		});
+		password.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if(!password.getText().equals(password2.getText()) && (password.getText().length() > 0 || password.getText().length() > 0)){
+					lblPass.setForeground(new Color(244, 66, 38));
+					lblPass.setText("La contraseña no coincide");
+				}else if(password.getText().equals(password2.getText())){
+					lblPass.setForeground(new Color(63, 155, 19));
+					lblPass.setText("Contraseña correcta");
+					userOk = true;
+				}else if(password.getText().length() == 0 && password2.getText().length() == 0) {
+					lblPass.setText("");
+				}
+			}
+		});
+
 
 		name.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				try {
 					if(u.userExist(name.getText()) && name.getText().length() > 0) {
-						lblWarning.setText("Usuario no disponible");
-						lblWarning.setForeground(Color.red);
+						lblWarning.setForeground(new Color(244, 66, 38));
+						lblWarning.setText("Usuario no disponible");					
 					}else if(!u.userExist(name.getText()) && name.getText().length() > 0){
+						if(name.getText().length() < 5) {
+							lblWarning.setForeground(new Color(244, 66, 38));
+							lblWarning.setText("Debe contener al menos 5 caracteres");
+						}else {
+						lblWarning.setForeground(new Color(63, 155, 19));
 						lblWarning.setText("Usuario disponible");
-						lblWarning.setForeground(Color.GREEN);
 						userName = true;
+						}
 					}else if(name.getText().length() < 1) {
 						lblWarning.setText("");
 					}
@@ -142,13 +168,15 @@ public class Register extends JFrame implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == reg) {
 				try {
-					if (userOk && userOk) {
+					if (userOk && userName) {
 						u.insertUser(name.getText(),password.getText());
+//						w.setVisible(true);
+						this.setVisible(false);
+						
 					} else {
 
 					}
 				} catch (Exception e1) {
-
 					e1.printStackTrace();
 				}
 			}

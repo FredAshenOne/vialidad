@@ -10,11 +10,14 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 
 public class Window extends JFrame implements ActionListener {
-	Functions f = new Functions();
+	Users u = new Users();
+	ResultSet rs;
 	Conexion c = new Conexion();
 	private JPanel contentPane;
 	private JTextField user;
@@ -23,7 +26,8 @@ public class Window extends JFrame implements ActionListener {
 	JLabel lblInicioSesion = new JLabel("Inicio Sesion");
 	private JButton nuevoUser;
 	Register r = new Register();
-	
+	private JLabel lblWarningLog;
+	AdminMenu am = new AdminMenu();
 	
 	
 	public Window() {
@@ -74,13 +78,38 @@ public class Window extends JFrame implements ActionListener {
 		TextPrompt tpUs = new TextPrompt("Usuario",user);
 		tpUs.changeStyle(Font.ITALIC);
 		TextPrompt tpPass = new TextPrompt("Contraseña",password);
+		
+		lblWarningLog = new JLabel("");
+		lblWarningLog.setHorizontalAlignment(SwingConstants.CENTER);
+		lblWarningLog.setForeground(new Color(244, 66, 38));
+		lblWarningLog.setFont(new Font("Yu Gothic UI Light", Font.ITALIC, 10));
+		lblWarningLog.setBounds(28, 152, 187, 14);
+		mainPanel.add(lblWarningLog);
 		tpPass.changeStyle(Font.ITALIC);
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == nuevoUser) {
 			r.setVisible(true);
-			c.query("Select * from usuario");
+			this.setVisible(false);
+		}
+		if(e.getSource() == btnIngresar) {
+			try {
+				if(u.userExist(user.getText()) && u.passExist(password.getText())){
+						if (u.tipo(user.getText()) == 1) {
+							am.setVisible(true);
+							this.setVisible(false);
+						}else {
+							//vt.setVisible(true);
+							this.setVisible(false);
+						}
+					
+				}else {
+					lblWarningLog.setText("Usuario o Contraseña no coinciden");
+				}
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		}
 	}
 }

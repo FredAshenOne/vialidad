@@ -15,4 +15,14 @@ public class Conexion {
 		}
 		return myRs;
 	}
+	
+	public void update(String sentence) {
+		try {
+		con = DriverManager.getConnection(url+db,usuario,password);	
+		Statement mystmt = con.createStatement();
+		mystmt.executeUpdate(sentence);
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}
+	}
 }

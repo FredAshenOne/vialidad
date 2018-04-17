@@ -10,6 +10,13 @@ public class Main {
 					frame.setVisible(true);
 					Register reg = new Register();
 					reg.setVisible(false);
+					ViewTarjeta tarjetaWin = new ViewTarjeta();
+					tarjetaWin.setVisible(false);
+					NewTarjeta newTarjeta = new NewTarjeta();
+					newTarjeta.setVisible(false);
+					AdminMenu adFrame = new AdminMenu();
+					adFrame.setVisible(false);
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
