@@ -18,6 +18,7 @@ import javax.swing.JButton;
 public class Window extends JFrame implements ActionListener {
 	Users u = new Users();
 	ResultSet rs;
+	Style l = new Style();
 	Conexion c = new Conexion();
 	private JPanel contentPane;
 	private JTextField user;
@@ -42,15 +43,19 @@ public class Window extends JFrame implements ActionListener {
 		mainPanel.setBounds(0, 0, 250, 222);
 		contentPane.add(mainPanel);
 		mainPanel.setLayout(null);
+		mainPanel.setOpaque(true);
+		mainPanel.setBackground(new Color(255,255,255));
 		
 		user = new JTextField();
 		user.setBounds(28, 64, 187, 25);
 		mainPanel.add(user);
 		user.setColumns(10);
+		user.setBorder(null);
 		
 		password = new JTextField();
 		password.setBounds(28, 100, 187, 25);
 		mainPanel.add(password);
+		password.setBorder(null);
 		password.setColumns(10);
 		
 		
@@ -86,6 +91,12 @@ public class Window extends JFrame implements ActionListener {
 		lblWarningLog.setBounds(28, 152, 187, 14);
 		mainPanel.add(lblWarningLog);
 		tpPass.changeStyle(Font.ITALIC);
+		am.btnExit.addActionListener(this);
+		r.reg.addActionListener(this);
+		r.btnCancelar.addActionListener(this);
+		l.mdBtn(btnIngresar, Color.decode("#2196F3"));
+		l.btnPointer(btnIngresar);
+		l.btnPointer(nuevoUser);
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -95,13 +106,15 @@ public class Window extends JFrame implements ActionListener {
 		}
 		if(e.getSource() == btnIngresar) {
 			try {
-				if(u.userExist(user.getText()) && u.passExist(password.getText())){
+				if(u.login(password.getText(), user.getText())) {
 						if (u.tipo(user.getText()) == 1) {
 							am.setVisible(true);
+							am.lblBienvenido.setText(am.lblBienvenido.getText()+u.name(user.getText()));
 							this.setVisible(false);
 						}else {
-							//vt.setVisible(true);
+							
 							this.setVisible(false);
+							
 						}
 					
 				}else {
@@ -111,5 +124,33 @@ public class Window extends JFrame implements ActionListener {
 				e1.printStackTrace();
 			}
 		}
-	}
+		if(e.getSource() == r.reg) {
+			try {
+				if(u.dataCheck(r.txtNombre, r.txtApellidoP, r.txtApellidoM,r.name,r.password,r.password2)) {
+					if (r.userOk && r.userName) {	
+					u.insertUser(r.name.getText(),r.password.getText(),r.txtNombre.getText(),r.txtApellidoP.getText(),r.txtApellidoM.getText());		
+					this.setVisible(true);
+					r.setVisible(false);
+					}
+				} else {
+					r.lblDataComplete.setForeground(new Color(244, 66, 38));
+					r.lblDataComplete.setText("Datos Incompletos");
+				}
+			}catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+		if(e.getSource() == r.btnCancelar) {
+			r.clearText();
+			r.setVisible(false);
+			this.setVisible(true);
+		}
+		if(e.getSource() == am.btnExit) {
+			user.setText("");
+			password.setText("");
+			am.setVisible(false);
+			this.setVisible(true);
+		}
+	}	
 }
+
