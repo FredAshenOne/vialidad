@@ -1,7 +1,4 @@
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.Font;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -10,7 +7,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 public class ViewTarjeta extends JFrame {
-	
+
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane,mainPanel = new JPanel();
 	JLabel lblSecetaria,lblFolio,lblServicioPart,lblPlacas,lblPuertas,lblPasaj,lblCilindros,lblComb,lblColor2,lblUso,lblClase,lblTipo,lblServicio,lblProced,lblNrpv,lblMotor,lblSerie,lblMov,lblColor1,lblVersion,lblModelo,lblMarca,lblRecaudadora,lblLinea,lblDatosVe,lblClave,lblFecha,lblNewLabel,lblPropietario,lblPlaneacion,lblCc,lblAdmon;
 	private JTextField txtPropietario,txtLugar,txtFolio,txtFecha,txtRecaudadora,txtClave,txtPlacas,txtMarca,txtLinea,

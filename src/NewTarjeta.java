@@ -1,7 +1,4 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -10,23 +7,30 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class NewTarjeta extends JFrame implements ActionListener {
-	
+
+	private static final long serialVersionUID = 1L;
+	Conexion c = new Conexion();
+	ConfirmRequest cr = new ConfirmRequest();
 	Style s = new Style();
 	
 	private JPanel contentPane,mainPanel = new JPanel();
 	JLabel lblSecetaria,lblFolio,lblServicioPart,lblPlacas,lblPuertas,lblPasaj,lblCilindros,lblComb,lblColor2,lblUso,lblClase,lblTipo,lblServicio,lblProced,lblNrpv,lblMotor,lblSerie,lblMov,lblColor1,lblVersion,lblModelo,lblMarca,lblRecaudadora,lblLinea,lblDatosVe,lblClave,lblFecha,lblNewLabel,lblPropietario,lblPlaneacion,lblCc,lblAdmon;
 	private JTextField txtPropietario,txtLugar,txtFolio,txtFecha,txtRecaudadora,txtClave,txtPlacas,txtMarca,txtLinea,
-	txtVersion,txtModelo,txtColor1,txtColor2,txtSerie,txtMotor,txtNRPV,txtMov,txtProced,txtComb,txtServicio,txtUso,txtTipo,
-	txtCC,txtCilindros,txtPuertas,txtPasaj,txtClase;
+	txtVersion,txtModelo,txtColor1,txtColor2,txtSerie,txtMotor,txtNRPV,
+	txtCC,txtCilindros,txtPuertas,txtPasaj;
 	private JLabel lblLogo;
 	public JButton btnSave;
 	private JLabel lblDataComplete;
+	private JLabel lblSave;
+	private JComboBox<Integer> cbMov,cbProced,cbComb,cbServ,cbUso,cbClase,cbTipo;
+	
 
 	
 	public NewTarjeta() {
@@ -37,7 +41,7 @@ public class NewTarjeta extends JFrame implements ActionListener {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		mainPanel.setBounds(0, 0, 812, 452);
+		mainPanel.setBounds(10, 0, 812, 452);
 		contentPane.add(mainPanel);
 		mainPanel.setLayout(null);
 		
@@ -277,36 +281,6 @@ public class NewTarjeta extends JFrame implements ActionListener {
 		lblUso.setBounds(407, 133, 40, 14);
 		carPane.add(lblUso);
 		
-		txtMov = new JTextField();
-		txtMov.setColumns(10);
-		txtMov.setBounds(447, 34, 53, 16);
-		carPane.add(txtMov);
-		s.mdTxt(txtMov, Color.WHITE, Color.black);
-		
-		txtProced = new JTextField();
-		txtProced.setColumns(10);
-		txtProced.setBounds(447, 55, 53, 16);
-		carPane.add(txtProced);
-		s.mdTxt(txtProced, Color.WHITE, Color.black);
-		
-		txtComb = new JTextField();
-		txtComb.setColumns(10);
-		txtComb.setBounds(447, 80, 53, 16);
-		carPane.add(txtComb);
-		s.mdTxt(txtComb, Color.WHITE, Color.black);
-		
-		txtServicio = new JTextField();
-		txtServicio.setColumns(10);
-		txtServicio.setBounds(447, 105, 53, 16);
-		carPane.add(txtServicio);
-		s.mdTxt(txtServicio, Color.WHITE, Color.black);
-		
-		txtUso = new JTextField();
-		txtUso.setColumns(10);
-		txtUso.setBounds(447, 130, 53, 16);
-		carPane.add(txtUso);
-		s.mdTxt(txtUso, Color.WHITE, Color.black);
-		
 		lblClase = new JLabel("CLASE");
 		lblClase.setFont(new Font("Verdana", Font.PLAIN, 7));
 		lblClase.setBounds(517, 34, 33, 14);
@@ -333,15 +307,9 @@ public class NewTarjeta extends JFrame implements ActionListener {
 		lblPasaj.setBounds(517, 134, 41, 14);
 		carPane.add(lblPasaj);
 		
-		txtTipo = new JTextField();
-		txtTipo.setColumns(10);
-		txtTipo.setBounds(538, 57, 24, 16);
-		carPane.add(txtTipo);
-		s.mdTxt(txtTipo, Color.WHITE, Color.black);
-		
 		lblCc = new JLabel("CC");
 		lblCc.setFont(new Font("Verdana", Font.PLAIN, 7));
-		lblCc.setBounds(572, 59, 15, 14);
+		lblCc.setBounds(575, 59, 18, 14);
 		carPane.add(lblCc);
 		
 		txtCC = new JTextField();
@@ -367,17 +335,46 @@ public class NewTarjeta extends JFrame implements ActionListener {
 		txtPasaj.setBounds(560, 132, 56, 16);
 		carPane.add(txtPasaj);
 		s.mdTxt(txtPasaj, Color.WHITE, Color.black);
-		
-		txtClase = new JTextField();
-		txtClase.setColumns(10);
-		txtClase.setBounds(560, 34, 56, 16);
-		carPane.add(txtClase);
-		s.mdTxt(txtClase, Color.WHITE, Color.black);
 		s.mdPanel(carPane,Color.decode("#C8E6C9"));
-		s.mdPanel(mainPanel,Color.decode("#E8F5E9"));
+		s.mdPanel(mainPanel,Color.WHITE);
 		lblDatosVe.setOpaque(true);
 		lblDatosVe.setBackground(Color.decode("#2E7D32"));
 		lblDatosVe.setForeground(Color.WHITE);
+		
+		cbMov = new JComboBox<Integer>();
+		cbMov.setModel(new DefaultComboBoxModel(new String[] {"","1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}));
+		cbMov.setBounds(447, 34, 53, 16);
+		carPane.add(cbMov);
+		
+		cbProced = new JComboBox<Integer>();
+		cbProced.setModel(new DefaultComboBoxModel(new String[] {"","1", "2", "3"}));
+		cbProced.setBounds(447, 55, 53, 16);
+		carPane.add(cbProced);
+		
+		cbComb = new JComboBox<Integer>();
+		cbComb.setModel(new DefaultComboBoxModel(new String[] {"","1", "2", "3", "4", "5", "10", "11"}));
+		cbComb.setBounds(447, 80, 53, 16);
+		carPane.add(cbComb);
+		
+		cbServ = new JComboBox<Integer>();
+		cbServ.setModel(new DefaultComboBoxModel(new String[] {"","1", "2", "3", "4", "5"}));
+		cbServ.setBounds(447, 105, 53, 16);
+		carPane.add(cbServ);
+		
+		cbUso = new JComboBox<Integer>();
+		cbUso.setModel(new DefaultComboBoxModel(new String[] {"","1", "2", "3", "4", "5", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51"}));
+		cbUso.setBounds(447, 130, 53, 16);
+		carPane.add(cbUso);
+		
+		cbClase = new JComboBox<Integer>();
+		cbClase.setModel(new DefaultComboBoxModel(new String[] {"","1", "2", "3", "4"}));
+		cbClase.setBounds(560, 34, 53, 16);
+		carPane.add(cbClase);
+		
+		cbTipo = new JComboBox();
+		cbTipo.setModel(new DefaultComboBoxModel(new String[]{"","11", "12", "13", "14", "15", "16", "17", "18", "51", "52", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "4", "48", "49", "50", "80", "81", "61", "62", "63", "64", "65", "66", "67", "68", "69", "71", "72", "73", "74", "75", "76"}));
+		cbTipo.setBounds(538, 57, 36, 16);
+		carPane.add(cbTipo);
 		
 		lblLogo = new JLabel("");
 		lblLogo.setBounds(307, 11, 53, 56);
@@ -385,11 +382,11 @@ public class NewTarjeta extends JFrame implements ActionListener {
 		lblLogo.setIcon(new ImageIcon("views/logoVial.png"));
 		
 		btnSave = new JButton("");
-		btnSave.setBounds(594, 34, 30, 30);
+		btnSave.setBounds(594, 34, 20, 20);
 		mainPanel.add(btnSave);
 		btnSave.addActionListener(this);
 		btnSave.setBorder(null);
-		btnSave.setIcon(new ImageIcon("views/save.png"));
+		btnSave.setIcon(new ImageIcon("views/save2.png"));
 		btnSave.setContentAreaFilled(false);
 		s.btnPointer(btnSave);
 		
@@ -399,7 +396,13 @@ public class NewTarjeta extends JFrame implements ActionListener {
 		mainPanel.add(lblDataComplete);
 		lblDataComplete.setForeground(Color.decode("#F44336"));
 		
+		lblSave = new JLabel("Guardar");
+		lblSave.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSave.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 11));
+		lblSave.setBounds(581, 49, 46, 14);
+		mainPanel.add(lblSave);
 		
+		cr.btnContinue.addActionListener(this);
 	}
 
 	public boolean dataComplete() {
@@ -410,12 +413,12 @@ public class NewTarjeta extends JFrame implements ActionListener {
 				txtLinea.getText().length() < 1 || txtVersion.getText().length() < 1 ||
 				txtModelo.getText().length() < 1 || txtColor1.getText().length() < 1 ||
 				txtSerie.getText().length() < 1 || txtMotor.getText().length() < 1 ||
-				txtNRPV.getText().length() < 1 || txtMov.getText().length() < 1 ||
-				txtProced.getText().length() < 1 || txtComb.getText().length() < 1 ||
-				txtServicio.getText().length() < 1 || txtUso.getText().length() < 1 ||
-				txtTipo.getText().length() < 1 || txtCC.getText().length() < 1 ||
+				txtNRPV.getText().length() < 1 || cbMov.getSelectedItem().toString().length() < 1 ||
+				cbProced.getSelectedItem().toString().length() < 1 || cbComb.getSelectedItem().toString().length() < 1 ||
+				cbServ.getSelectedItem().toString().length() < 1 || cbUso.getSelectedItem().toString().length() < 1 ||
+				cbClase.getSelectedItem().toString().length() < 1 || txtCC.getText().length() < 1 ||
 				txtCilindros.getText().length() < 1 && txtPuertas.getText().length() < 1 ||
-				txtPasaj.getText().length() < 1 || txtClase.getText().length() < 1) {
+				txtPasaj.getText().length() < 1 || cbTipo.getSelectedItem().toString().length() < 1) {
 			lblDataComplete.setText("Datos Incompletos");
 			return false;
 		}else {
@@ -423,9 +426,16 @@ public class NewTarjeta extends JFrame implements ActionListener {
 		}
 	}
 	
+	public void saveCard() {
+		
+		c.update("Insert into vehiculo ");
+		c.update("insert into propietario (idUsuario,placas) values ("+");");
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+	
+	
 		
 	}
 }

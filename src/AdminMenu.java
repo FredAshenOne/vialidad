@@ -7,17 +7,16 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import java.awt.Font;
-import java.awt.Point;
-import java.awt.Toolkit;
 
 import javax.swing.SwingConstants;
 
 public class AdminMenu extends JFrame implements ActionListener {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	ConfirmRequest cr = new ConfirmRequest();
 	
 	public JLabel lblBienvenido = new JLabel("Bienvenido! ");
 	Style s = new Style();
@@ -104,6 +103,7 @@ public class AdminMenu extends JFrame implements ActionListener {
 		s.btnPointer(btnExit);
 		
 		nt.btnSave.addActionListener(this);
+		cr.btnContinue.addActionListener(this);
 		
 	}
 	
@@ -112,12 +112,17 @@ public class AdminMenu extends JFrame implements ActionListener {
 		if(e.getSource() == btnAddCard) {
 			nt.setVisible(true);
 			this.setVisible(false);
-		}
-		if(e.getSource() == nt.btnSave) {
+		}if(e.getSource() == nt.btnSave) {
 			if(nt.dataComplete()) {
-				this.setVisible(true);
-				nt.setVisible(false);
+				cr.setVisible(true);
 			}
+		}if(e.getSource() == cr.btnContinue) {
+			cr.setVisible(false);
+			nt.setVisible(false);
+			this.setVisible(true);
+			
 		}
+		
+		
 	}
 }

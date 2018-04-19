@@ -1,6 +1,5 @@
-import java.awt.BorderLayout;
-import java.awt.Color;
 
+import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -16,6 +15,8 @@ import java.sql.SQLException;
 import javax.swing.JButton;
 
 public class Window extends JFrame implements ActionListener {
+	
+	private static final long serialVersionUID = 1L;
 	Users u = new Users();
 	ResultSet rs;
 	Style l = new Style();
