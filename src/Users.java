@@ -74,6 +74,17 @@ public class Users {
     	return contador > 0;	
     	
     }
+    
+    public void getPropietario(ResultSet r,JTextField t1,JTextField t2,JTextField t3) {
+    	try {
+    		t1.setText(r.getString("Nombre"));
+    		t2.setText(r.getString("ApellidoP"));
+    		t3.setText(r.getString("ApellidoM"));
+    	}catch(Exception ex) {
+    		ex.printStackTrace();
+    	}
+    }
+    
 
 }
     

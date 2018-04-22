@@ -12,7 +12,6 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import javax.swing.border.LineBorder;
 public class MainWindow extends JFrame implements ActionListener,MouseListener{
 	
 	
@@ -20,6 +19,7 @@ public class MainWindow extends JFrame implements ActionListener,MouseListener{
 	private static final long serialVersionUID = 1L;
 	Style s = new Style();
 	Window w = new Window();
+	Consulta con = new Consulta();
 	private JPanel contentPane;
 
 	JButton btnConsulta,btnInicio;
@@ -62,7 +62,7 @@ public class MainWindow extends JFrame implements ActionListener,MouseListener{
 		s.mdBtn(btnInicio, Color.decode(s.color),Color.white);
 		s.btnPointer(btnConsulta);
 		s.btnPointer(btnInicio);
-		
+		con.btnRegresar.addActionListener(this);
 		w.btnRegresar.addActionListener(this);
 	}
 
@@ -70,7 +70,14 @@ public class MainWindow extends JFrame implements ActionListener,MouseListener{
 	public void actionPerformed(ActionEvent e) {
 		
 		if(e.getSource() == btnConsulta) {
-			
+			con.setVisible(true);
+			this.setVisible(false);
+		}
+		if(e.getSource() == con.btnRegresar) {
+			this.setVisible(true);
+			con.setVisible(false);
+			s.clearData(con.txtPlacas);
+			s.clearData(con.txtSerie);
 		}
 		if (e.getSource() == btnInicio) {
 			w.setVisible(true);
@@ -79,6 +86,8 @@ public class MainWindow extends JFrame implements ActionListener,MouseListener{
 		if(e.getSource() == w.btnRegresar) {
 			this.setVisible(true);
 			w.setVisible(false);
+			s.clearData(w.user);
+			s.clearData(w.password);
 
 		}
 		

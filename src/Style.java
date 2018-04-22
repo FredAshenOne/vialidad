@@ -5,6 +5,7 @@ import java.awt.Toolkit;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
@@ -62,6 +63,20 @@ public class Style {
 		btn.setOpaque(true);
 		btn.setBackground(cb);
 		btn.setForeground(cf);
+		
+	}
+	
+	public void clearData(JTextField t1) {
+		t1.setText("");
+	}
+	
+	public boolean maxLength(JTextField txt,JLabel wrn,int ch) {
+		if(txt.getText().length() > ch) {
+			wrn.setForeground(Color.red);
+			wrn.setText("Excede los caracteres permitidos");			
+			return true;
+		}
+		return false;
 		
 	}
 	

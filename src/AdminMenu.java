@@ -16,7 +16,6 @@ public class AdminMenu extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	ConfirmRequest cr = new ConfirmRequest();
-	Consulta con = new Consulta();
 	public JLabel lblBienvenido = new JLabel("Bienvenido! ");
 	Style s = new Style();
 	NewTarjeta nt = new NewTarjeta();
@@ -25,31 +24,20 @@ public class AdminMenu extends JFrame implements ActionListener {
 	
 	public AdminMenu() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 246, 313);
+		setBounds(100, 100, 243, 317);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JPanel mainPanel = new JPanel();
-		mainPanel.setBounds(0, 0, 227, 291);
+		mainPanel.setBounds(0, 0, 217, 291);
 		s.mdPanel(mainPanel,Color.white);
 		contentPane.add(mainPanel);
-		mainPanel.setLayout(null);	
-		
-		JPanel header = new JPanel();
-		header.setBounds(51, 11, 166, 38);
-		header.setLayout(null);
-		mainPanel.add(header);
-		s.mdPanel(header,Color.white);
-		lblBienvenido.setHorizontalAlignment(SwingConstants.LEFT);
-		lblBienvenido.setFont(new Font("Yu Gothic UI Light", Font.ITALIC, 11));
-				
-		lblBienvenido.setBounds(10, 11, 156, 16);
-		header.add(lblBienvenido);
+		mainPanel.setLayout(null);
 	
 		JPanel mainCard = new JPanel();
-		mainCard.setBounds(10, 60, 207, 207);
+		mainCard.setBounds(10, 73, 207, 207);
 		mainCard.setLayout(null);
 		s.mdPanel(mainCard,Color.WHITE);
 		mainPanel.add(mainCard);
@@ -67,12 +55,12 @@ public class AdminMenu extends JFrame implements ActionListener {
 		s.btnPointer(btnCard);
 		
 		JLabel lblAddUser = new JLabel("Usuarios");
-		lblAddUser.setFont(new Font("Yu Gothic UI Light", Font.ITALIC, 13));
+		lblAddUser.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 13));
 		lblAddUser.setBounds(73, 29, 124, 14);
 		mainCard.add(lblAddUser);
 		
 		JLabel lblAddCard = new JLabel("Tarjetas");
-		lblAddCard.setFont(new Font("Yu Gothic UI Light", Font.ITALIC, 13));
+		lblAddCard.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 13));
 		lblAddCard.setBounds(73, 100, 124, 14);
 		mainCard.add(lblAddCard);
 		s.btnPointer(btnAddUser);
@@ -84,7 +72,7 @@ public class AdminMenu extends JFrame implements ActionListener {
 		s.btnPointer(btnSettings);
 		
 		JLabel lblSettings = new JLabel("Configuraci\u00F3n");
-		lblSettings.setFont(new Font("Yu Gothic UI Light", Font.ITALIC, 13));
+		lblSettings.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 13));
 		lblSettings.setBounds(73, 162, 124, 14);
 		mainCard.add(lblSettings);
 		
@@ -93,6 +81,10 @@ public class AdminMenu extends JFrame implements ActionListener {
 		mainPanel.add(btnRegresar);
 		s.btnPointer(btnRegresar);
 		s.imgBtn(btnRegresar, s.urlIcon);
+		lblBienvenido.setBounds(10, 46, 207, 16);
+		mainPanel.add(lblBienvenido);
+		lblBienvenido.setHorizontalAlignment(SwingConstants.LEFT);
+		lblBienvenido.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 14));
 		
 		nt.btnSave.addActionListener(this);
 		cr.btnContinue.addActionListener(this);

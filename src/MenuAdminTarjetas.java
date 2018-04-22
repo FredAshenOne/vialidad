@@ -8,15 +8,21 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class MenuAdminTarjetas extends JFrame implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
+	ConsultaRemover cr = new ConsultaRemover();
 	NewTarjeta nt = new NewTarjeta();
+	Conexion c = new Conexion();
+	ResultSet rs;
 	Users u = new Users();
 	Style s = new Style();
+	Remover r = new Remover();
 	Consulta con = new Consulta();
+	ViewTarjeta vt = new ViewTarjeta();
 	private JPanel contentPane;
 	JButton btnCrear = new JButton(),btnRegresar = new JButton(), btnRemover= new JButton(),btnConsultar=new JButton();
 	public MenuAdminTarjetas() {
@@ -62,12 +68,13 @@ public class MenuAdminTarjetas extends JFrame implements ActionListener{
 		mainPanel.add(lblRemover);
 		
 		JLabel lblTitle = new JLabel("Selecciona un movimiento");
-		lblTitle.setFont(new Font("Yu Gothic UI Light", Font.ITALIC, 14));
+		lblTitle.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 14));
 		lblTitle.setBounds(47, 21, 163, 14);
 		mainPanel.add(lblTitle);
 		btnConsultar.addActionListener(this);
 		btnCrear.addActionListener(this);
 		nt.btnSave.addActionListener(this);
+		btnRemover.addActionListener(this);
 		s.imgBtn(btnCrear, s.urlbtn);
 		s.btnPointer(btnConsultar);
 		s.btnPointer(btnCrear);
@@ -80,6 +87,9 @@ public class MenuAdminTarjetas extends JFrame implements ActionListener{
 		
 		nt.btnRegresar.addActionListener(this);
 		con.btnRegresar.addActionListener(this);
+		r.btnDelete.addActionListener(this);
+		vt.btnRegresar.addActionListener(this);
+		cr.btnRegresar.addActionListener(this);
 		
 	}
 	@Override
@@ -98,6 +108,7 @@ public class MenuAdminTarjetas extends JFrame implements ActionListener{
 				
 			}
 		}
+
 		if(e.getSource() == btnCrear) {
 			nt.setVisible(true);
 			this.setVisible(false);
@@ -107,9 +118,19 @@ public class MenuAdminTarjetas extends JFrame implements ActionListener{
 		}if(e.getSource() == con.btnRegresar) {
 			this.setVisible(true);
 			con.setVisible(false);
+			s.clearData(con.txtPlacas);
+			s.clearData(con.txtSerie);
 		}if(e.getSource() == nt.btnRegresar) {
 			this.setVisible(true);
 			nt.setVisible(false);
+		}if(e.getSource() == btnRemover) {
+			cr.setVisible(true);
+			this.setVisible(false);
+		}if(e.getSource() == cr.btnRegresar) {
+			cr.setVisible(false);
+			this.setVisible(true);
+			s.clearData(cr.txtPlacas);
+			s.clearData(cr.txtSerie);
 		}
 	}
 }

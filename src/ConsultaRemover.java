@@ -17,10 +17,11 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 
-public class Consulta extends JFrame implements ActionListener,MouseListener{
-
-	private static final long serialVersionUID = 1L;
+public class ConsultaRemover extends JFrame implements ActionListener,MouseListener{
 	
+	private static final long serialVersionUID = 1L;
+	Warnings w = new Warnings();
+	Remover r = new Remover();
 	Users u = new Users();
 	Style s = new Style();
 	ResultSet rs,rp;
@@ -31,10 +32,10 @@ public class Consulta extends JFrame implements ActionListener,MouseListener{
 	JTextField txtSerie;
 	JLabel lblWarn;
 	JButton btnConsultar,btnRegresar;
-	JLabel lblTitle = new JLabel("Consulta");
+	JLabel lblTitle = new JLabel("Remover Tarjeta");
 	
 
-	public Consulta() {
+	public ConsultaRemover() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 231, 324);
 		contentPane = new JPanel();
@@ -66,8 +67,6 @@ public class Consulta extends JFrame implements ActionListener,MouseListener{
 		txtSerie.setColumns(5);
 		txtSerie.setBounds(10, 161, 195, 43);
 		mainPanel.add(txtSerie);
-		
-	
 		
 		btnRegresar = new JButton();
 		btnRegresar.setBounds(10, 11, 35,35);
@@ -105,9 +104,10 @@ public class Consulta extends JFrame implements ActionListener,MouseListener{
 		lblWarn.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 11));
 		lblWarn.setBounds(10, 206, 195, 26);
 		mainPanel.add(lblWarn);
-		vt.btnRegresar.addActionListener(this);
 		btnConsultar.addActionListener(this);
-	
+		r.btnDelete.addActionListener(this);
+		w.btnAceptar.addActionListener(this);
+		w.btnCancelar.addActionListener(this);
 	}	
 
 	@Override
@@ -122,10 +122,10 @@ public class Consulta extends JFrame implements ActionListener,MouseListener{
 						lblWarn.setForeground(Color.red);
 						lblWarn.setText("No se encontraron reultados");
 					}else {
-						vt.setVisible(true);
+						r.setVisible(true);
 						this.setVisible(false);
-						vt.getTarjetaByPlacas(rs);
-						u.getPropietario(rs, vt.txtPropietario, vt.txtAp1, vt.txtAp2);
+						r.getTarjetaByPlacas(rs);
+						u.getPropietario(rs, r.txtPropietario, r.txtAp1, r.txtAp2);
 						
 					}
 				} catch (SQLException e1) {
@@ -134,12 +134,30 @@ public class Consulta extends JFrame implements ActionListener,MouseListener{
 				
 			}
 		}
-		if(e.getSource() == vt.btnRegresar) {
+		if(e.getSource() == r.btnRegresar) {
 			this.setVisible(true);
-			vt.setVisible(false);
+			r.setVisible(false);
+		}if(e.getSource() == r.btnDelete) {
+			w.setVisible(true);
+		}
+		if(e.getSource() == w.btnAceptar) {
+
+			try {
+			c.update("DELETE FROM tarjetas WHERE placas = '"+txtPlacas.getText()+"' AND numSerie LIKE '%"+txtSerie.getText()+"'");
+			w.setVisible(false);
+			r.setVisible(false);
+			this.setVisible(true);
+			}catch(Exception ex) {
+				
+			}
+			
+		
+		}if(e.getSource() == w.btnCancelar) {
+			w.setVisible(false);
 		}
 		
 	}
+	
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {

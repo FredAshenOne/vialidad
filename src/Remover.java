@@ -13,17 +13,17 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 
-public class ViewTarjeta extends JFrame implements ActionListener {
+public class Remover extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	ConfirmRequest cr = new ConfirmRequest();
 	Style s = new Style();
 	Users u = new Users();
+	Conexion c = new Conexion();
 	
 	
 	private JPanel contentPane,mainPanel = new JPanel();
-	public JLabel lblSecetaria,lblFolio,lblServicioPart,lblPlacas,lblPuertas,lblPasaj,lblCilindros,lblComb,lblColor2,
-	lblDataComplete,lblSave,lblAp2,lblAp1,lblLogo,lblUso,lblClase,lblTipo,lblServicio,lblProced,lblNrpv,lblMotor,
+	public JLabel lblSecetaria,lblFolio,lblServicioPart,lblPlacas,lblPuertas,lblPasaj,lblCilindros,lblComb,lblColor2,lblSave,lblAp2,lblAp1,lblLogo,lblUso,lblClase,lblTipo,lblServicio,lblProced,lblNrpv,lblMotor,
 	lblSerie,lblMov,lblColor1,lblVersion,lblModelo,lblMarca,lblRecaudadora,lblLinea,lblDatosVe,lblClave,lblFecha,
 	lblNewLabel,lblPropietario,lblPlaneacion,lblCc,lblAdmon;
 	
@@ -33,8 +33,10 @@ public class ViewTarjeta extends JFrame implements ActionListener {
 	
 	JButton btnRegresar = new JButton();
 
+	JButton btnDelete = new JButton("");
 	
-	public ViewTarjeta() {
+	public Remover() {
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 703, 370);
 		contentPane = new JPanel();
@@ -339,63 +341,62 @@ public class ViewTarjeta extends JFrame implements ActionListener {
 		txtMov = new JTextField();
 		txtMov.setBounds(447, 34, 53, 16);
 		carPane.add(txtMov);
-		s.mdTxt(txtMov, Color.WHITE,Color.BLACK);
-		
+		s.mdTxt(txtMov, Color.WHITE, Color.BLACK);
 		txtProced = new JTextField();
 		txtProced.setBounds(447, 55, 53, 16);
 		carPane.add(txtProced);
-		s.mdTxt(txtProced, Color.WHITE,Color.BLACK);
+		
 		txtComb = new JTextField();
 		txtComb.setBounds(447, 80, 53, 16);
 		carPane.add(txtComb);
-		s.mdTxt(txtComb, Color.WHITE,Color.BLACK);
+		s.mdTxt(txtComb, Color.WHITE, Color.BLACK);
 		txtServ = new JTextField();
 		txtServ.setBounds(447, 105, 53, 16);
 		carPane.add(txtServ);
-		s.mdTxt(txtServ, Color.WHITE,Color.BLACK);
+		s.mdTxt(txtServ, Color.white,Color.BLACK);
 		txtUso = new JTextField();
 		txtUso.setBounds(447, 130, 53, 16);
 		carPane.add(txtUso);
-		s.mdTxt(txtUso, Color.WHITE,Color.BLACK);
+		
 		txtClase = new JTextField();
 		txtClase.setBounds(585, 34, 53, 16);
 		carPane.add(txtClase);
-		s.mdTxt(txtClase, Color.WHITE,Color.BLACK);
+		s.mdTxt(txtClase, Color.WHITE, Color.black);
+		
 		txtTipo = new JTextField();
 		txtTipo.setBounds(538, 57, 53, 16);
 		carPane.add(txtTipo);
-		s.mdTxt(txtTipo, Color.WHITE,Color.BLACK);
+		s.mdTxt(txtTipo, Color.WHITE, Color.black);
+		
 		txtRecaudadora = new JTextField();
 		txtRecaudadora.setBounds(75, 47, 172, 16);
 		userPanel.add(txtRecaudadora);
-		s.mdTxt(txtRecaudadora, Color.WHITE,Color.BLACK);
+		s.mdTxt(txtRecaudadora,Color.WHITE, Color.black);
+		
 		lblAp1 = new JLabel("APELLIDO P");
 		lblAp1.setFont(new Font("Verdana", Font.PLAIN, 7));
 		lblAp1.setBounds(148, 10, 58, 14);
 		userPanel.add(lblAp1);
+		
 		txtAp1 = new JTextField();
 		txtAp1.setColumns(10);
 		txtAp1.setBounds(200, 7, 73, 16);
 		userPanel.add(txtAp1);
-		s.mdTxt(txtAp1, Color.WHITE,Color.BLACK);
+		s.mdTxt(txtAp1, Color.white, Color.BLACK);
 		lblAp2 = new JLabel("APELLIDO M");
 		lblAp2.setFont(new Font("Verdana", Font.PLAIN, 7));
+		lblAp2.setBounds(278, 9, 58, 14);
 		userPanel.add(lblAp2);
+		
 		txtAp2 = new JTextField();
 		txtAp2.setBounds(333, 7, 73, 16);
 		userPanel.add(txtAp2);
-		s.mdTxt(txtAp2, Color.WHITE,Color.BLACK);
+		s.mdTxt(txtAp2, Color.WHITE, Color.BLACK);
 		
 		lblLogo = new JLabel("");
 		lblLogo.setBounds(307, 11, 53, 56);
 		mainPanel.add(lblLogo);
 		lblLogo.setIcon(new ImageIcon("views/logoVial.png"));
-			
-		lblDataComplete = new JLabel("");
-		lblDataComplete.setFont(new Font("Yu Gothic UI Light", Font.ITALIC, 10));
-		lblDataComplete.setBounds(485, 70, 151, 14);
-		mainPanel.add(lblDataComplete);
-		lblDataComplete.setForeground(Color.decode("#F44336"));
 		
 		btnRegresar.setBounds(0, 0, 35,35);
 		mainPanel.add(btnRegresar);
@@ -433,7 +434,16 @@ public class ViewTarjeta extends JFrame implements ActionListener {
 		txtAp1.setEditable(false);
 		txtAp2.setEditable(false);
 		
+		btnDelete.setBounds(581, 19, 45, 45);
+		mainPanel.add(btnDelete);
 		
+		JLabel lblDelete = new JLabel("Borrar");
+		lblDelete.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDelete.setBounds(557, 70, 96, 14);
+		mainPanel.add(lblDelete);
+		s.imgBtn(btnDelete, "views/delete1.png");
+		s.btnPointer(btnDelete);
+		btnDelete.addActionListener(this);
 	}
 	public void getTarjetaByPlacas(ResultSet res){
 		try {	
@@ -454,9 +464,7 @@ public class ViewTarjeta extends JFrame implements ActionListener {
 			
 	@Override
 	public void actionPerformed(ActionEvent e) {
-	
 		
 		
 	}
 }		
-

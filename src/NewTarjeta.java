@@ -193,7 +193,7 @@ public class NewTarjeta extends JFrame implements ActionListener {
 		carPane.add(txtVersion);
 		s.mdTxt(txtVersion, Color.WHITE, Color.black);
 		
-		btnRegresar.setBounds(-1, 0, 35,35);
+		btnRegresar.setBounds(0, 0, 35,35);
 		mainPanel.add(btnRegresar);
 		s.btnPointer(btnRegresar);
 		s.imgBtn(btnRegresar, s.urlIcon);
@@ -498,9 +498,9 @@ public class NewTarjeta extends JFrame implements ActionListener {
 			JTextField t14,JTextField t15,JTextField t16,JTextField t17,JTextField t18,JTextField t19,JTextField t20,JTextField t21){
 		t1.setText("");t2.setText("");t3.setText("");t4.setText("");t5.setText("");t6.setText("");t7.setText("");t8.setText("");t9.setText("");t10.setText("");t11.setText("");
 		t12.setText("");t12.setText("");t13.setText("");t14.setText("");t15.setText("");t16.setText("");t17.setText("");t18.setText("");t19.setText("");t20.setText("");t21.setText("");
-
-		
-	}
+		cbMov.setSelectedIndex(1);cbProced.setSelectedIndex(1);cbComb.setSelectedIndex(1);cbServ.setSelectedIndex(1);
+		cbUso.setSelectedIndex(1);cbClase.setSelectedIndex(1);cbTipo.setSelectedIndex(1);cbRecaudadora.setSelectedIndex(1);
+		}
 		
 	@Override
 	public void actionPerformed(ActionEvent e) {

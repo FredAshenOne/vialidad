@@ -24,8 +24,7 @@ public class Window extends JFrame implements ActionListener,MouseListener {
 	Style l = new Style();
 	Conexion c = new Conexion();
 	private JPanel contentPane;
-	private JTextField user;
-	private JTextField password;
+	public JTextField user,password;
 	JButton btnIngresar = new JButton("Ingresar"),btnRegresar;
 	JLabel lblInicioSesion = new JLabel("Inicio Sesion");
 	private JButton nuevoUser;
