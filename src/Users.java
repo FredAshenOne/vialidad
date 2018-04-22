@@ -30,16 +30,6 @@ public class Users {
         return count > 0;
     }
     
-    public int tipo(String user) throws SQLException {
-    	
-    	try {
-    		res = c.query("select tipo from usuario where User ='"+user+"';");
-    		res.next();
-    	}catch(Exception ex) {
-    		ex.printStackTrace();
-    	}
-    	return Integer.parseInt(res.getString(1));
-    }
     
     public boolean dataCheck(JTextField txt1,JTextField txt2,JTextField txt3,JTextField txt4,JTextField txt5,JTextField txt6) {
     	if(txt1.getText().length() > 0 && txt2.getText().length()>0 && txt3.getText().length()>0 
@@ -59,6 +49,33 @@ public class Users {
     	}return res.getString("Nombre")+" "+res.getString("ApellidoP")+" "+res.getString("ApellidoM");
     }
     
+    public int getidUserByName(String nombre,String apellidoP ,String apellidoM) throws SQLException {
+    	try {
+    		res=c.query("Select id from propietario where nombre = '"+nombre+"' and ApellidoP ='"+apellidoP+"' and ApellidoM = '"+apellidoM+"';");
+    		res.next();
+    	}catch(Exception ex){
+    		ex.printStackTrace();
+    	}
+    	return Integer.parseInt(res.getString(1));	
+    }
     
+    public boolean getExistingPropietario(String nombre, String apellidoP,String apellidoM) throws SQLException {
+    	int contador = 0;
+    	try {
+    		res=c.query("Select * from propietario where nombre = '"+nombre+"' and ApellidoP ='"+apellidoP+"' and ApellidoM = '"+apellidoM+"';");
+    		
+    	}catch(Exception ex){
+    		ex.printStackTrace();
+    	}
+    	while(res.next()) {
+    		contador++;
+    	}
+    	res.close();
+    	return contador > 0;	
+    	
+    }
 
 }
+    
+
+

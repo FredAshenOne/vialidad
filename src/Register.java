@@ -14,9 +14,11 @@ import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.Color;
 
-public class Register extends JFrame implements ActionListener{
+public class Register extends JFrame implements ActionListener,MouseListener{
 
 	Conexion c = new Conexion();
 	Users u = new Users();
@@ -24,31 +26,26 @@ public class Register extends JFrame implements ActionListener{
 	
 	ResultSet rs;
 	private static final long serialVersionUID = 1L;
-	public boolean check = false;
+	public boolean check = false,userOk = false,userName = false;
 	private JPanel contentPane;
 	public JTextField password,password2,name,txtApellidoM,txtApellidoP,txtNombre;
-	JButton reg = new JButton("Registrar"),btnCancelar;
-	private JLabel lblIngresaTusDatos,lblIngresaTuNombre,lblIngresaTuContrasea,lblConfirmaTuContrasea;
-	public boolean userOk = false,userName = false;
-	private JLabel lblApellidoM;
-	private JLabel lblApellidoP;
-	private JLabel lblNombre;
-	public JLabel lblDataComplete,lblWarning,lblPass;
-
+	JButton reg = new JButton("Registrar"),btnRegresar;
+	public JLabel lblIngresaTusDatos,lblIngresaTuNombre,lblIngresaTuContrasea,lblConfirmaTuContrasea,lblApellidoM,
+	lblDataComplete,lblWarning,lblPass,lblApellidoP,lblNombre;
+	
 		public Register() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 268, 525);
+		setBounds(100, 100, 268, 452);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JPanel mainPanel = new JPanel();
-		mainPanel.setBounds(0, 0, 254, 486);
-		contentPane.add(mainPanel);
-		mainPanel.setOpaque(true);
-		mainPanel.setBackground(Color.WHITE);
+		mainPanel.setBounds(0, 0, 254, 415);
 		mainPanel.setLayout(null);
+		contentPane.add(mainPanel);
+		l.mdPanel(mainPanel,Color.white);
 		
 		name = new JTextField();
 		name.setBounds(42, 214, 176, 20);
@@ -65,15 +62,12 @@ public class Register extends JFrame implements ActionListener{
 		password2.setColumns(10);
 		password2.setBounds(42, 314, 176, 20);
 		mainPanel.add(password2);
+		reg.setFont(new Font("Century Gothic", Font.PLAIN, 12));
 				
 		reg.addActionListener(this);
-		reg.setBounds(42, 370, 176, 30);
-		reg.setContentAreaFilled(false);
-		reg.setBorder(null);
-		reg.setOpaque(true);
-		reg.setBackground(Color.decode("#42A5F5"));
-		reg.setForeground(Color.WHITE);
+		reg.setBounds(42, 354, 176, 30);
 		mainPanel.add(reg);
+		reg.addMouseListener(this);
 		
 		lblIngresaTusDatos = new JLabel("Ingresa tus datos");
 		lblIngresaTusDatos.setFont(new Font("Yu Gothic UI Light", Font.ITALIC, 13));
@@ -95,7 +89,7 @@ public class Register extends JFrame implements ActionListener{
 		
 		lblPass = new JLabel("");
 		lblPass.setFont(new Font("Yu Gothic Light", Font.ITALIC, 10));
-		lblPass.setBounds(42, 345, 176, 14);
+		lblPass.setBounds(42, 335, 176, 14);
 		mainPanel.add(lblPass);
 		
 		lblWarning = new JLabel("");
@@ -129,28 +123,25 @@ public class Register extends JFrame implements ActionListener{
 		lblNombre = new JLabel("Ingresa tu nombre");
 		lblNombre.setBounds(42, 49, 176, 14);
 		mainPanel.add(lblNombre);
-		TextPrompt tpUs = new TextPrompt("Usuario",name);
-		TextPrompt tpPass1 = new TextPrompt("Contraseña",password);
-		TextPrompt tpNombre = new TextPrompt("Nombre(s)",txtNombre);
-		TextPrompt tpAp = new TextPrompt("Apellido Paterno",txtApellidoP);
-		TextPrompt tpAm= new TextPrompt("Apellido Materno",txtApellidoM);
-		TextPrompt tpPass2 = new TextPrompt("Confirma Contraseña",password2);
+		TextPrompt tpUs = new TextPrompt("Usuario",name,l.f12,l.glight);
+		TextPrompt tpPass1 = new TextPrompt("Contraseña",password,l.f12,l.glight);
+		TextPrompt tpNombre = new TextPrompt("Nombre(s)",txtNombre,l.f12,l.glight);
+		TextPrompt tpAp = new TextPrompt("Apellido Paterno",txtApellidoP,l.f12,l.glight);
+		TextPrompt tpAm= new TextPrompt("Apellido Materno",txtApellidoM,l.f12,l.glight);
+		TextPrompt tpPass2 = new TextPrompt("Confirma Contraseña",password2,l.f12,l.glight);
 		
 		lblDataComplete = new JLabel("");
 		lblDataComplete.setFont(new Font("Yu Gothic UI", Font.ITALIC, 10));
 		lblDataComplete.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDataComplete.setBounds(42, 459, 176, 16);
+		lblDataComplete.setBounds(42, 390, 176, 16);
 		mainPanel.add(lblDataComplete);
 		
-		btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(42, 411, 176, 30);
-		btnCancelar.setContentAreaFilled(false);
-		btnCancelar.setBorder(null);
-		btnCancelar.setOpaque(true);
-		btnCancelar.setBackground(Color.decode("#F44336"));
-		btnCancelar.setForeground(Color.WHITE);
+		btnRegresar = new JButton();
+		btnRegresar.setBounds(10, 11, 35,35);
+		mainPanel.add(btnRegresar);
+		l.btnPointer(btnRegresar);
+		l.imgBtn(btnRegresar, l.urlIcon);
 		
-		mainPanel.add(btnCancelar);
 		tpUs.changeStyle(Font.ITALIC);
 		tpPass1.changeStyle(Font.ITALIC);
 		tpPass2.changeStyle(Font.ITALIC);
@@ -158,7 +149,8 @@ public class Register extends JFrame implements ActionListener{
 		tpAp.changeStyle(Font.ITALIC);
 		tpAm.changeStyle(Font.ITALIC);
 		
-		l.btnPointer(btnCancelar);
+		l.mdBtn(reg, Color.decode(l.color), Color.WHITE);
+	
 		l.btnPointer(reg);
 		
 		
@@ -241,5 +233,38 @@ public class Register extends JFrame implements ActionListener{
 			lblWarning.setText("");
 			lblPass.setText("");
 			lblDataComplete.setText("");
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			if(e.getSource() == reg) {
+				l.btnHover(reg, Color.white, Color.decode(l.color), Color.decode(l.color));
+			}	
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			if(e.getSource() == reg) {
+				l.mdBtn(reg, Color.decode(l.color), Color.white);
+			}
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
 		}
 }

@@ -7,6 +7,8 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
@@ -19,35 +21,37 @@ public class NewTarjeta extends JFrame implements ActionListener {
 	Conexion c = new Conexion();
 	ConfirmRequest cr = new ConfirmRequest();
 	Style s = new Style();
+	Users u = new Users();
 	
 	private JPanel contentPane,mainPanel = new JPanel();
-	JLabel lblSecetaria,lblFolio,lblServicioPart,lblPlacas,lblPuertas,lblPasaj,lblCilindros,lblComb,lblColor2,lblUso,lblClase,lblTipo,lblServicio,lblProced,lblNrpv,lblMotor,lblSerie,lblMov,lblColor1,lblVersion,lblModelo,lblMarca,lblRecaudadora,lblLinea,lblDatosVe,lblClave,lblFecha,lblNewLabel,lblPropietario,lblPlaneacion,lblCc,lblAdmon;
-	private JTextField txtPropietario,txtLugar,txtFolio,txtFecha,txtRecaudadora,txtClave,txtPlacas,txtMarca,txtLinea,
+	JLabel lblSecetaria,lblFolio,lblServicioPart,lblPlacas,lblPuertas,lblPasaj,lblCilindros,lblComb,lblColor2,
+	lblDataComplete,lblSave,lblAp2,lblAp1,lblLogo,lblUso,lblClase,lblTipo,lblServicio,lblProced,lblNrpv,lblMotor,
+	lblSerie,lblMov,lblColor1,lblVersion,lblModelo,lblMarca,lblRecaudadora,lblLinea,lblDatosVe,lblClave,lblFecha,
+	lblNewLabel,lblPropietario,lblPlaneacion,lblCc,lblAdmon;
+	
+	public JTextField txtPropietario,txtLugar,txtFolio,txtFecha,txtClave,txtPlacas,txtMarca,txtLinea,
 	txtVersion,txtModelo,txtColor1,txtColor2,txtSerie,txtMotor,txtNRPV,
-	txtCC,txtCilindros,txtPuertas,txtPasaj;
-	private JLabel lblLogo;
-	public JButton btnSave;
-	private JLabel lblDataComplete;
-	private JLabel lblSave;
-	private JComboBox<Integer> cbMov,cbProced,cbComb,cbServ,cbUso,cbClase,cbTipo;
+	txtCC,txtCilindros,txtPuertas,txtPasaj,txtAp1,txtAp2;
+	public JButton btnSave,btnRegresar = new JButton();
+	public JComboBox<Integer> cbMov,cbProced,cbComb,cbServ,cbUso,cbClase,cbTipo,cbRecaudadora;
 	
 
 	
 	public NewTarjeta() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 663, 365);
+		setBounds(100, 100, 689, 370);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		mainPanel.setBounds(10, 0, 812, 452);
+		mainPanel.setBounds(0, 0, 677, 452);
 		contentPane.add(mainPanel);
 		mainPanel.setLayout(null);
 		
 		lblSecetaria = new JLabel("Secretar\u00EDa de Movilidad");
 		lblSecetaria.setFont(new Font("Yu Gothic", Font.PLAIN, 13));
-		lblSecetaria.setBounds(10, 11, 165, 14);
+		lblSecetaria.setBounds(44, 11, 165, 14);
 		mainPanel.add(lblSecetaria);
 		
 		lblPlaneacion = new JLabel("Secretar\u00EDa de Planeaci\u00F3n");
@@ -69,7 +73,7 @@ public class NewTarjeta extends JFrame implements ActionListener {
 		mainPanel.add(lblNewLabel);
 		
 		JPanel userPanel = new JPanel();
-		userPanel.setBounds(10, 87, 626, 233);
+		userPanel.setBounds(10, 87, 648, 233);
 		mainPanel.add(userPanel);
 		userPanel.setLayout(null);
 		s.mdPanel(userPanel,Color.decode("#C8E6C9"));
@@ -80,7 +84,7 @@ public class NewTarjeta extends JFrame implements ActionListener {
 		userPanel.add(lblPropietario);
 		
 		txtPropietario = new JTextField();
-		txtPropietario.setBounds(65, 11, 182, 16);
+		txtPropietario.setBounds(65, 7, 73, 16);
 		userPanel.add(txtPropietario);
 		txtPropietario.setColumns(10);
 		s.mdTxt(txtPropietario, Color.WHITE, Color.black);
@@ -104,13 +108,13 @@ public class NewTarjeta extends JFrame implements ActionListener {
 		
 		txtFolio = new JTextField();
 		txtFolio.setColumns(10);
-		txtFolio.setBounds(492, 28, 120, 16);
+		txtFolio.setBounds(518, 28, 120, 16);
 		userPanel.add(txtFolio);
 		s.mdTxt(txtFolio, Color.WHITE, Color.black);
 		
 		lblFolio = new JLabel("FOLIO");
 		lblFolio.setFont(new Font("Verdana", Font.PLAIN, 7));
-		lblFolio.setBounds(461, 30, 29, 14);
+		lblFolio.setBounds(479, 30, 29, 14);
 		userPanel.add(lblFolio);
 		
 		lblRecaudadora = new JLabel("RECAUDADORA");
@@ -118,31 +122,25 @@ public class NewTarjeta extends JFrame implements ActionListener {
 		lblRecaudadora.setBounds(10, 52, 58, 14);
 		userPanel.add(lblRecaudadora);
 		
-		txtRecaudadora = new JTextField();
-		txtRecaudadora.setColumns(10);
-		txtRecaudadora.setBounds(75, 48, 120, 16);
-		userPanel.add(txtRecaudadora);
-		s.mdTxt(txtRecaudadora, Color.WHITE, Color.black);
-		
 		txtClave = new JTextField();
 		txtClave.setColumns(10);
-		txtClave.setBounds(492, 50, 120, 16);
+		txtClave.setBounds(518, 55, 120, 16);
 		userPanel.add(txtClave);
 		s.mdTxt(txtClave, Color.WHITE,Color.BLACK);
 		
 		lblClave = new JLabel("CLAVE VEH\u00CDCULAR");
 		lblClave.setFont(new Font("Verdana", Font.PLAIN, 7));
-		lblClave.setBounds(417, 52, 73, 14);
+		lblClave.setBounds(444, 57, 73, 14);
 		userPanel.add(lblClave);
 		
 		JPanel carPane = new JPanel();
-		carPane.setBounds(0, 74, 626, 160);
+		carPane.setBounds(0, 74, 648, 160);
 		userPanel.add(carPane);
 		carPane.setLayout(null);
 		
 		lblDatosVe = new JLabel("DATOS DEL VEH\u00CDCULO");
 		lblDatosVe.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDatosVe.setBounds(0, 0, 626, 23);
+		lblDatosVe.setBounds(0, 0, 649, 23);
 		carPane.add(lblDatosVe);
 		
 		
@@ -194,6 +192,12 @@ public class NewTarjeta extends JFrame implements ActionListener {
 		txtVersion.setBounds(59, 105, 126, 16);
 		carPane.add(txtVersion);
 		s.mdTxt(txtVersion, Color.WHITE, Color.black);
+		
+		btnRegresar.setBounds(-1, 0, 35,35);
+		mainPanel.add(btnRegresar);
+		s.btnPointer(btnRegresar);
+		s.imgBtn(btnRegresar, s.urlIcon);
+		
 		
 		txtModelo = new JTextField();
 		txtModelo.setColumns(10);
@@ -309,30 +313,30 @@ public class NewTarjeta extends JFrame implements ActionListener {
 		
 		lblCc = new JLabel("CC");
 		lblCc.setFont(new Font("Verdana", Font.PLAIN, 7));
-		lblCc.setBounds(575, 59, 18, 14);
+		lblCc.setBounds(595, 59, 18, 14);
 		carPane.add(lblCc);
 		
 		txtCC = new JTextField();
 		txtCC.setColumns(10);
-		txtCC.setBounds(592, 57, 24, 16);
+		txtCC.setBounds(614, 57, 24, 16);
 		carPane.add(txtCC);
 		s.mdTxt(txtCC, Color.WHITE, Color.black);
 		
 		txtCilindros = new JTextField();
 		txtCilindros.setColumns(10);
-		txtCilindros.setBounds(560, 82, 54, 16);
+		txtCilindros.setBounds(572, 82, 67, 16);
 		carPane.add(txtCilindros);
 		s.mdTxt(txtCilindros, Color.WHITE, Color.black);
 		
 		txtPuertas = new JTextField();
 		txtPuertas.setColumns(10);
-		txtPuertas.setBounds(560, 107, 56, 16);
+		txtPuertas.setBounds(567, 107, 71, 16);
 		carPane.add(txtPuertas);
 		s.mdTxt(txtPuertas, Color.WHITE, Color.black);
 		
 		txtPasaj = new JTextField();
 		txtPasaj.setColumns(10);
-		txtPasaj.setBounds(560, 132, 56, 16);
+		txtPasaj.setBounds(568, 132, 70, 16);
 		carPane.add(txtPasaj);
 		s.mdTxt(txtPasaj, Color.WHITE, Color.black);
 		s.mdPanel(carPane,Color.decode("#C8E6C9"));
@@ -368,13 +372,37 @@ public class NewTarjeta extends JFrame implements ActionListener {
 		
 		cbClase = new JComboBox<Integer>();
 		cbClase.setModel(new DefaultComboBoxModel(new String[] {"","1", "2", "3", "4"}));
-		cbClase.setBounds(560, 34, 53, 16);
+		cbClase.setBounds(585, 34, 53, 16);
 		carPane.add(cbClase);
 		
 		cbTipo = new JComboBox();
 		cbTipo.setModel(new DefaultComboBoxModel(new String[]{"","11", "12", "13", "14", "15", "16", "17", "18", "51", "52", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "4", "48", "49", "50", "80", "81", "61", "62", "63", "64", "65", "66", "67", "68", "69", "71", "72", "73", "74", "75", "76"}));
-		cbTipo.setBounds(538, 57, 36, 16);
+		cbTipo.setBounds(538, 57, 53, 16);
 		carPane.add(cbTipo);
+		
+		cbRecaudadora = new JComboBox<Integer>();
+		cbRecaudadora.setModel(new DefaultComboBoxModel(new String[] {"", "1", "2", "3", "4", "5", "94", "97", "114", "125", "133", "135"}));
+		cbRecaudadora.setBounds(75, 47, 172, 16);
+		userPanel.add(cbRecaudadora);
+		
+		lblAp1 = new JLabel("APELLIDO P");
+		lblAp1.setFont(new Font("Verdana", Font.PLAIN, 7));
+		lblAp1.setBounds(148, 10, 58, 14);
+		userPanel.add(lblAp1);
+		
+		txtAp1 = new JTextField();
+		txtAp1.setColumns(10);
+		txtAp1.setBounds(200, 7, 73, 16);
+		userPanel.add(txtAp1);
+		
+		lblAp2 = new JLabel("APELLIDO M");
+		lblAp2.setFont(new Font("Verdana", Font.PLAIN, 7));
+		lblAp2.setBounds(282, 7, 58, 14);
+		userPanel.add(lblAp2);
+		
+		txtAp2 = new JTextField();
+		txtAp2.setBounds(330, 9, 73, 16);
+		userPanel.add(txtAp2);
 		
 		lblLogo = new JLabel("");
 		lblLogo.setBounds(307, 11, 53, 56);
@@ -382,7 +410,7 @@ public class NewTarjeta extends JFrame implements ActionListener {
 		lblLogo.setIcon(new ImageIcon("views/logoVial.png"));
 		
 		btnSave = new JButton("");
-		btnSave.setBounds(594, 34, 20, 20);
+		btnSave.setBounds(586, 24, 20, 20);
 		mainPanel.add(btnSave);
 		btnSave.addActionListener(this);
 		btnSave.setBorder(null);
@@ -399,7 +427,7 @@ public class NewTarjeta extends JFrame implements ActionListener {
 		lblSave = new JLabel("Guardar");
 		lblSave.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSave.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 11));
-		lblSave.setBounds(581, 49, 46, 14);
+		lblSave.setBounds(574, 49, 46, 14);
 		mainPanel.add(lblSave);
 		
 		cr.btnContinue.addActionListener(this);
@@ -408,7 +436,7 @@ public class NewTarjeta extends JFrame implements ActionListener {
 	public boolean dataComplete() {
 		if(	txtPropietario.getText().length() < 1 || txtLugar.getText().length() < 1 ||
 				txtFolio.getText().length() < 1 || txtFecha.getText().length() < 1 ||
-				txtRecaudadora.getText().length() < 1 && txtClave.getText().length() < 1 ||
+				cbRecaudadora.getSelectedItem().toString().length() < 1 && txtClave.getText().length() < 1 ||
 				txtPlacas.getText().length() < 1 || txtMarca.getText().length() < 1 ||
 				txtLinea.getText().length() < 1 || txtVersion.getText().length() < 1 ||
 				txtModelo.getText().length() < 1 || txtColor1.getText().length() < 1 ||
@@ -426,16 +454,58 @@ public class NewTarjeta extends JFrame implements ActionListener {
 		}
 	}
 	
-	public void saveCard() {
+	public void saveCard() throws SQLException {
+		int clase = Integer.parseInt(cbClase.getSelectedItem().toString());
+		int rec = Integer.parseInt(cbRecaudadora.getSelectedItem().toString());
+		int mov = Integer.parseInt(cbMov.getSelectedItem().toString());
+		int proc = Integer.parseInt(cbProced.getSelectedItem().toString());
+		int comb = Integer.parseInt(cbComb.getSelectedItem().toString());
+		int serv = Integer.parseInt(cbServ.getSelectedItem().toString());
+		int uso = Integer.parseInt(cbUso.getSelectedItem().toString());
+		int nrpv = Integer.parseInt(txtNRPV.getText());
+		int puertas = Integer.parseInt(txtPuertas.getText());
+		int cil= Integer.parseInt(txtCilindros.getText());
+		int pas = Integer.parseInt(txtPasaj.getText());
+		int mod = Integer.parseInt(txtModelo.getText());
+		int cc = Integer.parseInt(txtCC.getText());
+		int tipo = Integer.parseInt(cbTipo.getSelectedItem().toString());
+		if(u.getExistingPropietario(txtPropietario.getText(),txtAp1.getText(),txtAp2.getText())) {
+			int idPropietario = u.getidUserByName(txtPropietario.getText(),txtAp1.getText(),txtAp2.getText());
+			c.update("Insert into tarjetas (idPropietario,placas,marca,submarca,vers,modelo,color1,color2,numSerie,numMotor,nrpv,cc,"
+					+ "cilindros,puertas,pasajeros,idclaseVehiculo,idClaseTipo,idCombustible,idMovimiento,idProcedencia,"
+					+ "idRecaudadora,idServicio,idUsoVehiculo,lugar,fecha,folio,claveVehicular) values ("+idPropietario+",'"+txtPlacas.getText()+"','"+txtMarca.getText()+"','"+txtLinea.getText()+"','"+txtVersion.getText()+"',"
+							+ mod+",'"+txtColor1.getText()+"','"+txtColor2.getText()+"','"+txtSerie.getText()+"','"+txtMotor.getText()+"',"
+									+nrpv+","+cc+","+cil+","+puertas+","+pas+","+ clase+","+tipo+","+comb+","+mov+","+proc+","+rec+","+serv+","+uso+",'"+txtLugar.getText()+"','"+txtFecha.getText()+"','"+txtFolio.getText()+"','"+txtClave.getText()+"');");
+			
+		}else {
+		c.update("insert into propietario (Nombre,ApellidoP,ApellidoM) values ('"+txtPropietario.getText()+"','"+txtAp1.getText()+"','"+txtAp2.getText()+"');");
+		int idPropietario = u.getidUserByName(txtPropietario.getText(),txtAp1.getText(),txtAp2.getText());
+		c.update("Insert into tarjetas (idPropietario,placas,marca,submarca,vers,modelo,color1,color2,numSerie,numMotor,nrpv,cc,"
+				+ "cilindros,puertas,pasajeros,idclaseVehiculo,idClaseTipo,idCombustible,idMovimiento,idProcedencia,"
+				+ "idRecaudadora,idServicio,idUsoVehiculo,lugar,fecha,folio,claveVehicular) values ("+idPropietario+",'"+txtPlacas.getText()+"','"+txtMarca.getText()+"','"+txtLinea.getText()+"','"+txtVersion.getText()+"',"
+						+ mod+",'"+txtColor1.getText()+"','"+txtColor2.getText()+"','"+txtSerie.getText()+"','"+txtMotor.getText()+"',"
+								+nrpv+","+cc+","+cil+","+puertas+","+pas+","+ clase+","+tipo+","+comb+","+mov+","+proc+","+rec+","+serv+","+uso+",'"+txtLugar.getText()+"','"+txtFecha.getText()+"','"+txtFolio.getText()+"','"+txtClave.getText()+"');");
 		
-		c.update("Insert into vehiculo ");
-		c.update("insert into propietario (idUsuario,placas) values ("+");");
-	}
+	}clearAll(txtPropietario,txtAp1,txtAp2,txtLugar,txtFolio,txtFecha,txtClave,txtPlacas,txtMarca,txtLinea,
+				txtVersion,txtModelo,txtColor1,txtColor2,txtSerie,txtMotor,txtNRPV,
+				txtCC,txtCilindros,txtPuertas,txtPasaj);
+		
+		
 	
+	}
+	public void clearAll(JTextField t1,JTextField t2,JTextField t3,JTextField t4,JTextField t5,
+			JTextField t6,JTextField t7,JTextField t8,JTextField t9,JTextField t10,JTextField t11,JTextField t12,JTextField t13,
+			JTextField t14,JTextField t15,JTextField t16,JTextField t17,JTextField t18,JTextField t19,JTextField t20,JTextField t21){
+		t1.setText("");t2.setText("");t3.setText("");t4.setText("");t5.setText("");t6.setText("");t7.setText("");t8.setText("");t9.setText("");t10.setText("");t11.setText("");
+		t12.setText("");t12.setText("");t13.setText("");t14.setText("");t15.setText("");t16.setText("");t17.setText("");t18.setText("");t19.setText("");t20.setText("");t21.setText("");
+
+		
+	}
+		
 	@Override
 	public void actionPerformed(ActionEvent e) {
 	
-	
+		
 		
 	}
 }
