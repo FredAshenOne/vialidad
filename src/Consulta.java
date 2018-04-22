@@ -20,7 +20,7 @@ public class Consulta extends JFrame implements ActionListener,MouseListener{
 	private static final long serialVersionUID = 1L;
 
 	Style s = new Style();
-	
+	 
 	private JPanel contentPane;
 	private JTextField txtPlacas;
 	private JTextField txtSerie;
@@ -50,12 +50,12 @@ public class Consulta extends JFrame implements ActionListener,MouseListener{
 		txtPlacas.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		txtPlacas.setBounds(10, 70, 195, 43);
 		mainPanel.add(txtPlacas);
-		txtPlacas.setColumns(10);
+		txtPlacas.setColumns(6);
 		
 		txtSerie = new JTextField();
 		txtSerie.setHorizontalAlignment(SwingConstants.CENTER);
 		txtSerie.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		txtSerie.setColumns(10);
+		txtSerie.setColumns(5);
 		txtSerie.setBounds(10, 161, 195, 43);
 		mainPanel.add(txtSerie);
 		
@@ -82,7 +82,10 @@ public class Consulta extends JFrame implements ActionListener,MouseListener{
 		lblSerie.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 12));
 		lblSerie.setBounds(10, 124, 195, 26);
 		mainPanel.add(lblSerie);
-		
+		TextPrompt tpPl= new TextPrompt("------",txtPlacas,s.f16,s.glight);
+		TextPrompt tpCs= new TextPrompt("-----",txtSerie,s.f16,s.glight);
+		tpPl.setHorizontalAlignment(JLabel.CENTER);
+		tpCs.setHorizontalAlignment(JLabel.CENTER);
 		s.mdBtn(btnConsultar,Color.decode(s.color),Color.white);
 		s.mdPanel(mainPanel, Color.white);
 		s.mdTxt(txtPlacas, Color.white,Color.black);
