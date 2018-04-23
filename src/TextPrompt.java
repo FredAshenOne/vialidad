@@ -33,20 +33,20 @@ public class TextPrompt extends JLabel
 	private boolean showPromptOnce;
 	private int focusLost;
 
-	public TextPrompt(String text, JTextComponent component)
+	public TextPrompt(String text, JTextComponent component,Font font, Color c)
 	{
-		this(text, component, Show.ALWAYS);
+		this(text, component, c,font,Show.ALWAYS);
 	}
 
-	public TextPrompt(String text, JTextComponent component, Show show)
+	public TextPrompt(String text, JTextComponent component, Color c,Font font,Show show)
 	{
 		this.component = component;
 		setShow( show );
 		document = component.getDocument();
 
 		setText( text );
-		setFont( component.getFont() );
-		setForeground( component.getForeground() );
+		setFont( font );
+		setForeground( c );
 		setBorder( new EmptyBorder(component.getInsets()) );
 		setHorizontalAlignment(JLabel.LEADING);
 

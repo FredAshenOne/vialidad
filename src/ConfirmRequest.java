@@ -39,8 +39,8 @@ public class ConfirmRequest extends JFrame {
 		panel.add(btnContinue);
 		btnCancel.setBounds(10, 62, 118, 23);
 		panel.add(btnCancel);
-		s.mdBtn(btnContinue,Color.decode("#2196F3"));
-		s.mdBtn(btnCancel,Color.decode("#F44336"));
+		s.mdBtn(btnContinue,Color.decode("#2196F3"),Color.white);
+		s.mdBtn(btnCancel,Color.decode("#F44336"),Color.white);
 		s.btnPointer(btnCancel);
 		s.btnPointer(btnContinue);
 	}
