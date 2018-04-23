@@ -401,7 +401,9 @@ public class NewTarjeta extends JFrame implements ActionListener {
 		lblSave.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 11));
 		lblSave.setBounds(581, 49, 46, 14);
 		mainPanel.add(lblSave);
-		
+		cbClase.setOpaque(true);
+		cbClase.setBackground(Color.WHITE);
+		cbClase.setBorder(null);
 		cr.btnContinue.addActionListener(this);
 	}
 
