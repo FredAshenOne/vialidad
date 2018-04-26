@@ -116,7 +116,7 @@ public class Consulta extends JFrame implements ActionListener,MouseListener{
 			if(!s.maxLength(txtPlacas, lblWarn, 8) && !s.maxLength(txtSerie, lblWarn, 5)) {
 				rs = c.query("SELECT * FROM propietario p LEFT JOIN tarjetas t ON p.id = t.idPropietario WHERE t.placas = '" + 
 						txtPlacas.getText()+"' AND t.numSerie LIKE '%"+txtSerie.getText()+"';");
-				
+						
 				try {			
 					if(!rs.next()) {
 						lblWarn.setForeground(Color.red);

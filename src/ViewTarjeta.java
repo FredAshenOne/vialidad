@@ -444,7 +444,7 @@ public class ViewTarjeta extends JFrame implements ActionListener {
 		txtSerie.setText(res.getString("numSerie"));txtMotor.setText(res.getString("numMotor"));txtNRPV.setText(res.getString("nrpv"));
 		txtCC.setText(res.getString("cc"));txtCilindros.setText(res.getString("cilindros"));txtPuertas.setText(res.getString("puertas"));
 		txtPasaj.setText(res.getString("pasajeros"));txtProced.setText(res.getString("idProcedencia"));txtComb.setText(res.getString("idCombustible"));
-		txtMov.setText(res.getString("idMovimiento"));txtServ.setText("idServicio");txtUso.setText(res.getString("idUsoVehiculo"));
+		txtMov.setText(res.getString("idMovimiento"));txtServ.setText(res.getString("idServicio"));txtUso.setText(res.getString("idUsoVehiculo"));
 		txtClase.setText(res.getString("idclaseVehiculo"));txtTipo.setText(res.getString("idClaseTipo"));txtRecaudadora.setText(res.getString("idRecaudadora"));
 		}catch(Exception ex) {
 			ex.printStackTrace();

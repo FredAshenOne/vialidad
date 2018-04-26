@@ -21,7 +21,7 @@ public class MenuAdminTarjetas extends JFrame implements ActionListener{
 	Users u = new Users();
 	Style s = new Style();
 	Remover r = new Remover();
-	Consulta con = new Consulta();
+	Search search = new Search();
 	ViewTarjeta vt = new ViewTarjeta();
 	private JPanel contentPane;
 	JButton btnCrear = new JButton(),btnRegresar = new JButton(), btnRemover= new JButton(),btnConsultar=new JButton();
@@ -86,11 +86,10 @@ public class MenuAdminTarjetas extends JFrame implements ActionListener{
 		s.mdPanel(mainPanel, Color.white);
 		
 		nt.btnRegresar.addActionListener(this);
-		con.btnRegresar.addActionListener(this);
 		r.btnDelete.addActionListener(this);
 		vt.btnRegresar.addActionListener(this);
 		cr.btnRegresar.addActionListener(this);
-		
+		search.btnRegresar.addActionListener(this);
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -113,13 +112,14 @@ public class MenuAdminTarjetas extends JFrame implements ActionListener{
 			nt.setVisible(true);
 			this.setVisible(false);
 		}if(e.getSource() == btnConsultar) {
-			con.setVisible(true);
+			search.setVisible(true);
 			this.setVisible(false);
-		}if(e.getSource() == con.btnRegresar) {
+		}if(e.getSource() == search.btnRegresar) {
 			this.setVisible(true);
-			con.setVisible(false);
-			s.clearData(con.txtPlacas);
-			s.clearData(con.txtSerie);
+			search.setVisible(false);
+			s.clearData(search.txtNombre);
+			s.clearData(search.txtApellidoP);
+			s.clearData(search.txtApellidoM);
 		}if(e.getSource() == nt.btnRegresar) {
 			this.setVisible(true);
 			nt.setVisible(false);
@@ -132,5 +132,7 @@ public class MenuAdminTarjetas extends JFrame implements ActionListener{
 			s.clearData(cr.txtPlacas);
 			s.clearData(cr.txtSerie);
 		}
+		
+		
 	}
 }

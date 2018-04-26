@@ -28,8 +28,7 @@ public class Users {
         }
         res.close();
         return count > 0;
-    }
-    
+    }    
     
     public boolean dataCheck(JTextField txt1,JTextField txt2,JTextField txt3,JTextField txt4,JTextField txt5,JTextField txt6) {
     	if(txt1.getText().length() > 0 && txt2.getText().length()>0 && txt3.getText().length()>0 
@@ -59,18 +58,19 @@ public class Users {
     	return Integer.parseInt(res.getString(1));	
     }
     
-    public boolean getExistingPropietario(String nombre, String apellidoP,String apellidoM) throws SQLException {
+    public boolean getExistingPropietario(String nombre, String apellidoP,String apellidoM)  {
     	int contador = 0;
     	try {
     		res=c.query("Select * from propietario where nombre = '"+nombre+"' and ApellidoP ='"+apellidoP+"' and ApellidoM = '"+apellidoM+"';");
-    		
-    	}catch(Exception ex){
-    		ex.printStackTrace();
-    	}
+    	
     	while(res.next()) {
     		contador++;
     	}
     	res.close();
+    	
+    	}catch(Exception ex){
+    		ex.printStackTrace();
+    	}
     	return contador > 0;	
     	
     }

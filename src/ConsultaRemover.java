@@ -107,10 +107,7 @@ public class ConsultaRemover extends JFrame implements ActionListener,MouseListe
 		btnConsultar.addActionListener(this);
 		r.btnDelete.addActionListener(this);
 		w.btnAceptar.addActionListener(this);
-<<<<<<< HEAD
 		r.btnRegresar.addActionListener(this);
-=======
->>>>>>> 501ee14df6c19404232c0279d9b6fd3a976058c0
 		w.btnCancelar.addActionListener(this);
 	}	
 
