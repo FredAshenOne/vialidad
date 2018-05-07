@@ -23,6 +23,7 @@ public class Seleccion extends JFrame implements ActionListener{
 	JButton btnContinuar,btnRegresar;
 	Users u = new Users();
 	ResultSet rs;
+	UpdateTarjeta ut = new UpdateTarjeta();
 	int index = 0;
 	
 	DefaultTableModel model = new DefaultTableModel();
@@ -73,7 +74,7 @@ public class Seleccion extends JFrame implements ActionListener{
 		btnContinuar.setBounds(168, 284, 89, 23);
 		mainPanel.add(btnContinuar);
 		btnContinuar.addActionListener(this);
-		vt.btnRegresar.addActionListener(this);
+		ut.btnRegresar.addActionListener(this);
 	}
 	
 
@@ -82,20 +83,20 @@ public class Seleccion extends JFrame implements ActionListener{
 		if(e.getSource() == btnContinuar) {
 			model = (DefaultTableModel) table.getModel();
 			index = table.getSelectedRow();
-			vt.setVisible(true);
+			ut.setVisible(true);
 			try {
 				rs = c.query("SELECT * FROM propietario p LEFT JOIN tarjetas t ON p.id = t.idPropietario WHERE t.placas = '"+model.getValueAt(index, 0)+"';");
 				rs.next();
-				vt.getTarjetaByPlacas(rs);
+				ut.setFields(rs);
 				u.getPropietario(rs, vt.txtPropietario, vt.txtAp1, vt.txtAp2);
 			}
 			catch(Exception ex) {
 				ex.printStackTrace();
 			}
 		}
-		if(e.getSource() == vt.btnRegresar) {
+		if(e.getSource() == ut.btnRegresar) {
 			this.setVisible(true);
-			vt.setVisible(false);
+			ut.setVisible(false);
 		}
 	}
 }

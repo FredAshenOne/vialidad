@@ -31,60 +31,53 @@ public class AdminMenu extends JFrame implements ActionListener {
 		contentPane.setLayout(null);
 		
 		JPanel mainPanel = new JPanel();
-		mainPanel.setBounds(0, 0, 217, 291);
+		mainPanel.setBounds(0, 0, 227, 278);
 		s.mdPanel(mainPanel,Color.white);
 		contentPane.add(mainPanel);
 		mainPanel.setLayout(null);
 	
 		JPanel mainCard = new JPanel();
-		mainCard.setBounds(10, 73, 207, 207);
+		mainCard.setBounds(10, 89, 207, 155);
 		mainCard.setLayout(null);
 		s.mdPanel(mainCard,Color.WHITE);
 		mainPanel.add(mainCard);
 		
-		
-		btnAddUser.setBounds(10, 11, 53, 53);
-		s.imgBtn(btnAddUser, "views/addUser.png");
-		btnAddUser.addActionListener(this);
-		mainCard.add(btnAddUser);
-		
-		btnCard.setBounds(10, 79, 53, 53);
+		btnCard.setBounds(10, 11, 53, 53);
 		btnCard.addActionListener(this);
 		mainCard.add(btnCard);
 		s.imgBtn(btnCard, "views/addCard.png");
 		s.btnPointer(btnCard);
 		
-		JLabel lblAddUser = new JLabel("Usuarios");
-		lblAddUser.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 13));
-		lblAddUser.setBounds(73, 29, 124, 14);
-		mainCard.add(lblAddUser);
-		
 		JLabel lblAddCard = new JLabel("Tarjetas");
 		lblAddCard.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 13));
-		lblAddCard.setBounds(73, 100, 124, 14);
+		lblAddCard.setBounds(73, 32, 124, 14);
 		mainCard.add(lblAddCard);
-		s.btnPointer(btnAddUser);
 		
 		btnSettings = new JButton();
-		btnSettings.setBounds(10, 145, 53, 53);
-		s.imgBtn(btnSettings, "views/settings.png");
+		btnSettings.setBounds(10, 91, 53, 53);
 		mainCard.add(btnSettings);
+		s.imgBtn(btnSettings, "views/settings.png");
 		s.btnPointer(btnSettings);
 		
-		JLabel lblSettings = new JLabel("Configuraci\u00F3n");
-		lblSettings.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 13));
-		lblSettings.setBounds(73, 162, 124, 14);
+		JLabel lblSettings = new JLabel("Configuracion");
+		lblSettings.setBounds(73, 112, 124, 14);
 		mainCard.add(lblSettings);
+		lblSettings.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 13));
 		
 		
-		btnRegresar.setBounds(10, 11, 35,35);
+		btnRegresar.setBounds(0, 0, 35,35);
 		mainPanel.add(btnRegresar);
 		s.btnPointer(btnRegresar);
 		s.imgBtn(btnRegresar, s.urlIcon);
-		lblBienvenido.setBounds(10, 46, 207, 16);
+		lblBienvenido.setBounds(10, 35, 207, 16);
 		mainPanel.add(lblBienvenido);
 		lblBienvenido.setHorizontalAlignment(SwingConstants.LEFT);
 		lblBienvenido.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 14));
+		s.imgBtn(btnAddUser, "views/profile.png");
+		btnAddUser.setBounds(192, 0, 35, 35);
+		mainPanel.add(btnAddUser);
+		btnAddUser.addActionListener(this);
+		s.btnPointer(btnAddUser);
 		
 		nt.btnSave.addActionListener(this);
 		cr.btnContinue.addActionListener(this);

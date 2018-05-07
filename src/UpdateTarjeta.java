@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.JTextField;
@@ -15,13 +16,14 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
-public class NewTarjeta extends JFrame implements ActionListener {
+public class UpdateTarjeta extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	Conexion c = new Conexion();
 	ConfirmRequest cr = new ConfirmRequest();
 	Style s = new Style();
 	Users u = new Users();
+	Warnings war = new Warnings();
 	
 	private JPanel contentPane,mainPanel = new JPanel();
 	JLabel lblSecetaria,lblFolio,lblServicioPart,lblPlacas,lblPuertas,lblPasaj,lblCilindros,lblComb,lblColor2,
@@ -37,7 +39,7 @@ public class NewTarjeta extends JFrame implements ActionListener {
 	
 
 	
-	public NewTarjeta() {
+	public UpdateTarjeta() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 689, 370);
 		contentPane = new JPanel();
@@ -433,6 +435,10 @@ public class NewTarjeta extends JFrame implements ActionListener {
 		cbClase.setBackground(Color.WHITE);
 		cbClase.setBorder(null);
 		cr.btnContinue.addActionListener(this);
+		war.lblWarning.setText("Se actualizaran los datos de la tarjeta");
+		war.btnAceptar.addActionListener(this);
+		war.btnCancelar.addActionListener(this);
+		txtSerie.setEditable(false);
 	}
 
 	public boolean dataComplete() {
@@ -472,30 +478,20 @@ public class NewTarjeta extends JFrame implements ActionListener {
 			int mod = Integer.parseInt(txtModelo.getText());
 			int cc = Integer.parseInt(txtCC.getText());
 			int tipo = Integer.parseInt(cbTipo.getSelectedItem().toString());
-			if(u.getExistingPropietario(txtPropietario.getText(),txtAp1.getText(),txtAp2.getText())&& dataComplete()) {
-				int idPropietario = u.getidUserByName(txtPropietario.getText(),txtAp1.getText(),txtAp2.getText());
-				c.update("Insert into tarjetas (idPropietario,placas,marca,submarca,vers,modelo,color1,color2,numSerie,numMotor,nrpv,cc,"
-						+ "cilindros,puertas,pasajeros,idclaseVehiculo,idClaseTipo,idCombustible,idMovimiento,idProcedencia,"
-						+ "idRecaudadora,idServicio,idUsoVehiculo,lugar,fecha,folio,claveVehicular) values ("+idPropietario+",'"+txtPlacas.getText()+"','"+txtMarca.getText()+"','"+txtLinea.getText()+"','"+txtVersion.getText()+"',"
-								+ mod+",'"+txtColor1.getText()+"','"+txtColor2.getText()+"','"+txtSerie.getText()+"','"+txtMotor.getText()+"',"
-										+nrpv+","+cc+","+cil+","+puertas+","+pas+","+ clase+","+tipo+","+comb+","+mov+","+proc+","+rec+","+serv+","+uso+",'"+txtLugar.getText()+"','"+txtFecha.getText()+"','"+txtFolio.getText()+"','"+txtClave.getText()+"');");
+				c.update("update tarjetas set placas = '"+txtPlacas.getText()+"',marca ='"+txtMarca.getText()+"',submarca = '"+txtLinea.getText()+"',"
+						+ "vers = '"+txtVersion.getText()+"',modelo = "+mod+" ,color1 = '"+txtColor1.getText()+"',color2='"+txtColor2.getText()+"'"
+								+ ",numSerie='"+txtSerie.getText()+"',numMotor='"+txtMotor.getText()+"',nrpv="+nrpv+",cc="+cc+","
+						+ "cilindros="+cil+",puertas="+puertas+",pasajeros="+pas+",idclaseVehiculo="+clase+",idClaseTipo="+tipo+","
+								+ "idCombustible="+comb+",idMovimiento="+mov+",idProcedencia="+proc+","
+						+ "idRecaudadora="+rec+",idServicio="+serv+",idUsoVehiculo="+uso+",lugar='"+txtLugar.getText()+"',fecha='"+txtFecha.getText()+"',"
+								+ "folio='"+txtFolio.getText()+"',claveVehicular='"+txtClave.getText()+"' where numSerie = '"+txtSerie.getText()+"'");
 				
-			}else if(dataComplete()){
-			c.update("insert into propietario (Nombre,ApellidoP,ApellidoM) values ('"+txtPropietario.getText()+"','"+txtAp1.getText()+"','"+txtAp2.getText()+"');");
-			int idPropietario = u.getidUserByName(txtPropietario.getText(),txtAp1.getText(),txtAp2.getText());
-			c.update("Insert into tarjetas (idPropietario,placas,marca,submarca,vers,modelo,color1,color2,numSerie,numMotor,nrpv,cc,"
-					+ "cilindros,puertas,pasajeros,idclaseVehiculo,idClaseTipo,idCombustible,idMovimiento,idProcedencia,"
-					+ "idRecaudadora,idServicio,idUsoVehiculo,lugar,fecha,folio,claveVehicular) values ("+idPropietario+",'"+txtPlacas.getText()+"','"+txtMarca.getText()+"','"+txtLinea.getText()+"','"+txtVersion.getText()+"',"
-							+ mod+",'"+txtColor1.getText()+"','"+txtColor2.getText()+"','"+txtSerie.getText()+"','"+txtMotor.getText()+"',"
-									+nrpv+","+cc+","+cil+","+puertas+","+pas+","+ clase+","+tipo+","+comb+","+mov+","+proc+","+rec+","+serv+","+uso+",'"+txtLugar.getText()+"','"+txtFecha.getText()+"','"+txtFolio.getText()+"','"+txtClave.getText()+"');");
-			
-		}clearAll(txtPropietario,txtAp1,txtAp2,txtLugar,txtFolio,txtFecha,txtClave,txtPlacas,txtMarca,txtLinea,
-					txtVersion,txtModelo,txtColor1,txtColor2,txtSerie,txtMotor,txtNRPV,
-					txtCC,txtCilindros,txtPuertas,txtPasaj);
-			
+				
+				
+		}	
 			
 		
-	}
+	
 	public void clearAll(JTextField t1,JTextField t2,JTextField t3,JTextField t4,JTextField t5,
 			JTextField t6,JTextField t7,JTextField t8,JTextField t9,JTextField t10,JTextField t11,JTextField t12,JTextField t13,
 			JTextField t14,JTextField t15,JTextField t16,JTextField t17,JTextField t18,JTextField t19,JTextField t20,JTextField t21){
@@ -505,9 +501,44 @@ public class NewTarjeta extends JFrame implements ActionListener {
 		cbUso.setSelectedIndex(0);cbClase.setSelectedIndex(0);cbTipo.setSelectedIndex(0);cbRecaudadora.setSelectedIndex(0);lblDataComplete.setText("");
 		}
 		
+	public void setFields(ResultSet res) {
+		try {	
+			txtPropietario.setText(res.getString("Nombre"));txtAp1.setText(res.getString("ApellidoP"));txtAp2.setText(res.getString("ApellidoM"));
+			txtLugar.setText(res.getString("lugar"));txtFolio.setText(res.getString("folio"));
+			txtFecha.setText(res.getString("fecha"));txtClave.setText(res.getString("claveVehicular"));txtPlacas.setText(res.getString("placas"));
+			txtMarca.setText(res.getString("marca"));txtLinea.setText(res.getString("submarca"));txtVersion.setText(res.getString("vers"));
+			txtModelo.setText(res.getString("modelo"));txtColor1.setText(res.getString("color1"));txtColor2.setText(res.getString("color2"));
+			txtSerie.setText(res.getString("numSerie"));txtMotor.setText(res.getString("numMotor"));txtNRPV.setText(res.getString("nrpv"));
+			txtCC.setText(res.getString("cc"));txtCilindros.setText(res.getString("cilindros"));txtPuertas.setText(res.getString("puertas"));
+			txtPasaj.setText(res.getString("pasajeros"));selectItem(cbProced,res.getString("idProcedencia"));selectItem(cbComb,res.getString("idCombustible"));
+			selectItem(cbMov,res.getString("idMovimiento"));selectItem(cbServ,res.getString("idServicio"));selectItem(cbUso,res.getString("idUsoVehiculo"));
+			selectItem(cbClase,res.getString("idclaseVehiculo"));selectItem(cbTipo,res.getString("idClaseTipo"));selectItem(cbRecaudadora,res.getString("idRecaudadora"));
+			}catch(Exception ex) {
+				ex.printStackTrace();
+			}
+		
+	}
+	
+	public void selectItem(JComboBox cb,String txt) {
+		cb.setSelectedItem(txt);
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-	
+		if(e.getSource()== btnSave) {
+			war.setVisible(true);
+		}		
+		if(e.getSource() == war.btnAceptar) {
+			try {
+				saveCard();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			war.setVisible(false);
+			
+		}
+		if(e.getSource() == war.btnCancelar) {
+			war.setVisible(false);
+		}
 		
 		
 	}

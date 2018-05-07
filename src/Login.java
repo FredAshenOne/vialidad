@@ -2,6 +2,7 @@
 import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -16,7 +17,7 @@ import java.sql.SQLException;
 
 import javax.swing.JButton;
 
-public class Window extends JFrame implements ActionListener,MouseListener {
+public class Login extends JFrame implements ActionListener,MouseListener {
 	
 	private static final long serialVersionUID = 1L;
 	Users u = new Users();
@@ -24,16 +25,17 @@ public class Window extends JFrame implements ActionListener,MouseListener {
 	Style l = new Style();
 	Conexion c = new Conexion();
 	private JPanel contentPane;
-	public JTextField user,password;
+	public JTextField user;
 	JButton btnIngresar = new JButton("Ingresar"),btnRegresar;
 	JLabel lblInicioSesion = new JLabel("Inicio Sesion");
 	private JButton nuevoUser;
 	Register r = new Register();
+	JPasswordField password;
 	private JLabel lblWarningLog;
 	AdminMenu am = new AdminMenu();
+	String pass;
 	
-	
-	public Window() {
+	public Login() {
 		r.getContentPane().setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 14));
 		r.lblConfirmaTuContrasea.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 12));
 		r.lblIngresaTuContrasea.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 12));
@@ -62,7 +64,7 @@ public class Window extends JFrame implements ActionListener,MouseListener {
 		user.setColumns(10);
 		user.setBorder(null);
 		
-		password = new JTextField();
+		password = new JPasswordField();
 		password.setBounds(28, 100, 187, 25);
 		mainPanel.add(password);
 		password.setBorder(null);
@@ -122,8 +124,9 @@ public class Window extends JFrame implements ActionListener,MouseListener {
 			this.setVisible(false);
 		}
 		if(e.getSource() == btnIngresar) {
+			pass = new String(password.getPassword());
 			try {
-				if(u.login(password.getText(), user.getText())) {
+				if(u.login(pass, user.getText())) {
 							am.setVisible(true);
 							am.lblBienvenido.setText(am.lblBienvenido.getText()+u.name(user.getText()));
 							this.setVisible(false);

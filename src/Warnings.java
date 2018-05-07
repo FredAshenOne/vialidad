@@ -18,6 +18,8 @@ public class Warnings extends JFrame implements MouseListener{
 
 	JButton btnCancelar = new JButton("Cancelar"),btnAceptar = new JButton("Aceptar");
 	Style s = new Style();
+	JLabel lblWarning;
+	
 	public Warnings() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 347, 184);
@@ -31,7 +33,7 @@ public class Warnings extends JFrame implements MouseListener{
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblWarning = new JLabel("Se Aceptas se borrar\u00E1 esta tarjeta de la base de datos");
+		lblWarning = new JLabel("Se Aceptas se borrar\u00E1 esta tarjeta de la base de datos");
 		lblWarning.setHorizontalAlignment(SwingConstants.CENTER);
 		lblWarning.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 14));
 		lblWarning.setBounds(10, 34, 312, 30);

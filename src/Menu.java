@@ -12,19 +12,19 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-public class MainWindow extends JFrame implements ActionListener,MouseListener{
+public class Menu extends JFrame implements ActionListener,MouseListener{
 	
 	
 	
 	private static final long serialVersionUID = 1L;
 	Style s = new Style();
-	Window w = new Window();
+	Login w = new Login();
 	Consulta con = new Consulta();
 	private JPanel contentPane;
 
 	JButton btnConsulta,btnInicio;
 	
-	public MainWindow() {
+	public Menu() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 241, 302);
 		contentPane = new JPanel();

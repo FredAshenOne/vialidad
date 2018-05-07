@@ -4,9 +4,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -30,6 +28,7 @@ public class Search extends JFrame implements ActionListener,MouseListener{
 	Users u = new Users();
 	Conexion c = new Conexion();
 	JLabel lblWrn;
+	UpdateTarjeta ut = new UpdateTarjeta();
 	
 	ResultSet rs;
 	public Search() {
@@ -84,7 +83,7 @@ public class Search extends JFrame implements ActionListener,MouseListener{
 		lblApellidoMaterno.setBounds(10, 159, 178, 14);
 		mainPanel.add(lblApellidoMaterno);
 		
-		btnConsulta = new JButton("Conusltar");
+		btnConsulta = new JButton("Consultar");
 		btnConsulta.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 11));
 		btnConsulta.setBounds(10, 220, 178, 30);
 		mainPanel.add(btnConsulta);
@@ -153,6 +152,7 @@ public class Search extends JFrame implements ActionListener,MouseListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnConsulta) {
+			model.setRowCount(0);
 			if(u.getExistingPropietario(txtNombre.getText(), txtApellidoP.getText(), txtApellidoM.getText())) {
 				try {					
 					int id = u.getidUserByName(txtNombre.getText(),txtApellidoP.getText(),txtApellidoM.getText());
@@ -168,15 +168,16 @@ public class Search extends JFrame implements ActionListener,MouseListener{
 						}
 						while(rs.next());					
 						
-					}else {
-						lblWrn.setForeground(Color.decode("#F44336"));
-						lblWrn.setText("No se encontraron resultados ");
 					}
+					
 					sel.table.setModel(model);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
+					}
+			}else{
+				lblWrn.setForeground(Color.decode("#F44336"));
+				lblWrn.setText("No se encontraron resultados ");
 				}
-			}
 		}
 		if(e.getSource() == sel.btnRegresar) {
 			this.setVisible(true);

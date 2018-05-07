@@ -120,7 +120,7 @@ public class Consulta extends JFrame implements ActionListener,MouseListener{
 				try {			
 					if(!rs.next()) {
 						lblWarn.setForeground(Color.red);
-						lblWarn.setText("No se encontraron reultados");
+						lblWarn.setText("No se encontraron resultados");
 					}else {
 						vt.setVisible(true);
 						this.setVisible(false);
